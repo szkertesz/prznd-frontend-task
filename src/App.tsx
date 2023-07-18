@@ -1,7 +1,11 @@
+import { Typography } from '@mui/material';
+
 function App() {
     return (
         <>
-            <h1>Frontend Coding Challenge</h1>
+            <Typography variant='h1' component='h1'>
+                Star Wars Character Search
+            </Typography>
         </>
     );
 }
