@@ -1,7 +1,8 @@
-import { Box, Button, ButtonBase, TextField, Typography } from '@mui/material'
+import { Container, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useData } from './api/data.hook'
 import { IPerson } from './api/person.interface'
+import SearchForm from './components/search-form'
 
 function App() {
   const [{ data, isLoading, isError }, startFetch] = useData()
@@ -50,57 +51,40 @@ function App() {
 
   return (
     <>
-      <Typography variant="h2" component="h1">
-        Star Wars Character Search
-      </Typography>
+      <Container>
+        <Typography variant="h2" component="h1">
+          Star Wars Character Search
+        </Typography>
 
-      <Box
-        component="form"
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField
-          id="character-search"
-          label="Search character"
-          variant="standard"
-          type="search"
-          value={search}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setSearch(event.target.value)
-          }}
-          sx={{ mb: 2, width: '50ch' }}
+        <SearchForm
+          search={search}
+          setSearch={setSearch}
+          submitSearch={submitSearch}
         />
-        <Button variant="contained" onClick={() => submitSearch()}>
-          Search
-        </Button>
-      </Box>
 
-      {isError && (
-        <p>
-          Something went wrong <br />
-          <small>check the console for details</small>
-        </p>
-      )}
+        {isError && (
+          <p>
+            Something went wrong <br />
+            <small>check the console for details</small>
+          </p>
+        )}
 
-      {isLoading && <p>Loading ...</p>}
-      {search && !data?.count && <p>No search result found :-\</p>}
+        {isLoading && <p>Loading ...</p>}
+        {search && !data?.count && <p>No search result found :-\</p>}
 
-      {displayData && (
-        <ul>
-          {displayData.map(item => (
-            <li key={item.url}>
-              <span>{item.name}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-      {data?.count && <button onClick={() => loadMoreData()}>Load more</button>}
+        {displayData && (
+          <ul>
+            {displayData.map(item => (
+              <li key={item.url}>
+                <span>{item.name}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        {data?.count && (
+          <button onClick={() => loadMoreData()}>Load more</button>
+        )}
+      </Container>
     </>
   )
 }
