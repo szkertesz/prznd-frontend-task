@@ -3,14 +3,19 @@ import { useEffect, useState } from 'react'
 import { useData } from './api/data.hook'
 import { IPerson } from './api/person.interface'
 import SearchForm from './components/search-form'
+import { TMethod, useArrangeData } from './api/arrange-data.hook'
+import DataSelect from './components/data-select'
 
 function App() {
   const [{ data, isLoading, isError }, startFetch] = useData()
   const [page, setPage] = useState<number>(1)
   const [search, setSearch] = useState<string>('')
-  const [storeData, setStoreData] = useState<IPerson[] | []>([])
-  const [displayData, setDisplayData] = useState<IPerson[] | []>([])
+  const [storeData, setStoreData] = useState<IPerson[]>([])
+  const [displayData, setDisplayData] = useState<IPerson[]>([])
+  const [method, setMethod] = useState<TMethod>('az')
   const baseUrl = import.meta.env.VITE_SWAPI_BASE_URL as string
+
+  const {arrangedData} = useArrangeData({datainput: displayData, method: method})
 
   const loadMoreData = () => {
     if (data?.next) {
@@ -39,8 +44,9 @@ function App() {
     }
     // change the data source in case of search
     setDisplayData(search ? data.results : storeData)
-    // setDisplayData(arrangedData)
-  }, [data, storeData])
+    console.log(method)
+    console.log(arrangedData)
+  }, [data, storeData, method])
 
   // return from search results if field gets empty
   useEffect(() => {
@@ -62,6 +68,8 @@ function App() {
           submitSearch={submitSearch}
         />
 
+        <DataSelect method={method} setMethod={setMethod} />
+
         {isError && (
           <p>
             Something went wrong <br />
@@ -70,18 +78,19 @@ function App() {
         )}
 
         {isLoading && <p>Loading ...</p>}
+
         {search && !data?.count && <p>No search result found :-\</p>}
 
-        {displayData && (
+        {arrangedData && (
           <ul>
-            {displayData.map(item => (
+            {arrangedData.map(item => (
               <li key={item.url}>
                 <span>{item.name}</span>
               </li>
             ))}
           </ul>
         )}
-        {data?.count && (
+        {data?.count && !search && (
           <button onClick={() => loadMoreData()}>Load more</button>
         )}
       </Container>

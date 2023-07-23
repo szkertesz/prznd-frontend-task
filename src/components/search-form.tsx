@@ -1,5 +1,4 @@
 import { Box, TextField, Button } from '@mui/material'
-import { FunctionComponent } from 'react'
 
 interface ISearchFormProps {
   search: string
@@ -7,11 +6,11 @@ interface ISearchFormProps {
   submitSearch: () => void
 }
 
-const SearchForm: FunctionComponent<ISearchFormProps> = ({
+const SearchForm = ({
   search,
   setSearch,
   submitSearch,
-}) => {
+}: ISearchFormProps) => {
   return (
     <Box
       component="form"
