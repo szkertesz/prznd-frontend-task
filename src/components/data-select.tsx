@@ -17,10 +17,10 @@ export default function DataSelect({method, setMethod}: IDataSelectProps) {
 
   return (
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Sort by</InputLabel>
+        <InputLabel id="data-select-label">Sort by</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          labelId="data-select-label"
+          id="simple-select"
           value={method}
           label="Sort by"
           onChange={handleChange}

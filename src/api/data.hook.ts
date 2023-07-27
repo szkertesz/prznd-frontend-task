@@ -3,7 +3,7 @@ import { IResponse } from './response.interface'
 import { IPerson } from './person.interface'
 
 export const useData = () => {
-  const [data, setData] = useState<IResponse | null>(null)
+  const [data, setData] = useState<IResponse>({} as IResponse)
   const [url, setUrl] = useState(import.meta.env.VITE_SWAPI_BASE_URL as string)
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)

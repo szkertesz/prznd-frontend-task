@@ -3,19 +3,20 @@ import { useEffect, useState } from 'react'
 import { useData } from './api/data.hook'
 import { IPerson } from './api/person.interface'
 import SearchForm from './components/search-form'
-import { TMethod, useArrangeData } from './api/arrange-data.hook'
+import { TMethod, useSortedData } from './api/arrange-data.hook'
 import DataSelect from './components/data-select'
 
 function App() {
   const [{ data, isLoading, isError }, startFetch] = useData()
   const [page, setPage] = useState<number>(1)
   const [search, setSearch] = useState<string>('')
-  const [storeData, setStoreData] = useState<IPerson[]>([])
-  const [displayData, setDisplayData] = useState<IPerson[]>([])
   const [method, setMethod] = useState<TMethod>('az')
+  const [storeData, setStoreData] = useState<IPerson[]>([])
   const baseUrl = import.meta.env.VITE_SWAPI_BASE_URL as string
-
-  const {arrangedData} = useArrangeData({datainput: displayData, method: method})
+  const sortedData = useSortedData({
+    inputData: search ? data.results : storeData,
+    method,
+  })
 
   const loadMoreData = () => {
     if (data?.next) {
@@ -29,31 +30,21 @@ function App() {
   }
 
   useEffect(() => {
-    // initial loading case:
-    if (page === 1 && !search) {
-      startFetch(baseUrl)
-    }
+    // initial loading case
+    startFetch(baseUrl)
+  }, [])
+
+  useEffect(() => {
     if (!data) return
-    // check if store already includes at least one of the items of the new data batch and
-    // merge the new data only if it doesn't
     if (
-      data.results.length &&
+      // search results won't be merged into storeData
+      !search &&
+      // merge the fetched data into store only if the store doesn't include its first item already
       !storeData.some(item => item.name === data.results[0].name)
     ) {
-      setStoreData([...storeData, ...data.results])
+      setStoreData(store => [...store, ...data.results])
     }
-    // change the data source in case of search
-    setDisplayData(search ? data.results : storeData)
-    console.log(method)
-    console.log(arrangedData)
-  }, [data, storeData, method])
-
-  // return from search results if field gets empty
-  useEffect(() => {
-    if (search.length === 0) {
-      setDisplayData(storeData)
-    }
-  }, [search])
+  }, [data])
 
   return (
     <>
@@ -81,9 +72,9 @@ function App() {
 
         {search && !data?.count && <p>No search result found :-\</p>}
 
-        {arrangedData && (
+        {sortedData && (
           <ul>
-            {arrangedData.map(item => (
+            {sortedData.map(item => (
               <li key={item.url}>
                 <span>{item.name}</span>
               </li>
