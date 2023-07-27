@@ -6,11 +6,7 @@ interface ISearchFormProps {
   submitSearch: () => void
 }
 
-const SearchForm = ({
-  search,
-  setSearch,
-  submitSearch,
-}: ISearchFormProps) => {
+const SearchForm = ({ search, setSearch, submitSearch }: ISearchFormProps) => {
   return (
     <Box
       component="form"

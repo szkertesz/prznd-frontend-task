@@ -1,4 +1,4 @@
-import { Container, Typography } from '@mui/material'
+import { Button, Container, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useData } from './api/data.hook'
 import { IPerson } from './api/person.interface'
@@ -82,7 +82,9 @@ function App() {
           </ul>
         )}
         {data?.count && !search && (
-          <button onClick={() => loadMoreData()}>Load more</button>
+          <Button variant="contained" onClick={() => loadMoreData()}>
+            Load more
+          </Button>
         )}
       </Container>
     </>

@@ -11,7 +11,6 @@ export const useSortedData = ({
   method: TMethod
 }) => {
   const sortData = useMemo(() => {
-    console.log('sortData hook runs')
     switch (method) {
       case 'az': {
         const sortedData = inputData.sort((a, b) =>
