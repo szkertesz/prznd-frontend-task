@@ -18,8 +18,8 @@ const CardList: FunctionComponent<CardListProps> = ({ data }) => {
         pl: 0,
       }}
     >
-      {data.map(item => (
-        <CardItem data={item} />
+      {data.map((item, index) => (
+        <CardItem data={item} index={index} />
       ))}
     </Box>
   )
