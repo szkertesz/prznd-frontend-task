@@ -12,6 +12,8 @@ const SearchForm = ({ search, setSearch, submitSearch }: ISearchFormProps) => {
       component="form"
       sx={{
         display: 'grid',
+        pt: 2,
+        pb: 4,
       }}
       noValidate
       autoComplete="off"

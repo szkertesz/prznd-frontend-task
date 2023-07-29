@@ -1,4 +1,4 @@
-import { Button, Container, Typography } from '@mui/material'
+import { AppBar, Button, Container, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useData } from './api/data.hook'
 import { IPerson } from './api/person.interface'
@@ -51,9 +51,11 @@ function App() {
   return (
     <>
       <Container>
-        <Typography variant="h2" component="h1">
-          Star Wars Character Search
-        </Typography>
+        <AppBar position="static" sx={{ mb: 5, p: 2 }}>
+          <Typography variant="h4" component="h1">
+            Star Wars Character Search
+          </Typography>
+        </AppBar>
 
         <SearchForm
           search={search}

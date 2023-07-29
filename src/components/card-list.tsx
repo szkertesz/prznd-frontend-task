@@ -14,7 +14,7 @@ const CardList: FunctionComponent<CardListProps> = ({ data }) => {
       sx={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(288px, 1fr))',
-        gap: '1rem',
+        gap: '1.5rem',
         pl: 0,
       }}
     >
