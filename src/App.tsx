@@ -32,10 +32,10 @@ function App() {
   useEffect(() => {
     // initial loading case
     startFetch(baseUrl)
-  }, [])
+  }, [startFetch, baseUrl])
 
   useEffect(() => {
-    if (!data) return
+    if (!data.results) return
     if (
       // search results won't be merged into storeData
       !search &&
