@@ -5,6 +5,7 @@ import { IPerson } from './api/person.interface'
 import SearchForm from './components/search-form'
 import { TMethod, useSortedData } from './api/arrange-data.hook'
 import DataSelect from './components/data-select'
+import CardList from './components/card-list'
 
 function App() {
   const [{ data, isLoading, isError }, startFetch] = useData()
@@ -36,6 +37,7 @@ function App() {
 
   useEffect(() => {
     if (!data.results) return
+    console.log(data)
     if (
       // search results won't be merged into storeData
       !search &&
@@ -59,6 +61,10 @@ function App() {
           submitSearch={submitSearch}
         />
 
+        <p>
+          Showing {storeData.length} of {data.count}
+        </p>
+
         <DataSelect method={method} setMethod={setMethod} />
 
         {isError && (
@@ -72,15 +78,7 @@ function App() {
 
         {search && !data?.count && <p>No search result found :-\</p>}
 
-        {sortedData && (
-          <ul>
-            {sortedData.map(item => (
-              <li key={item.url}>
-                <span>{item.name}</span>
-              </li>
-            ))}
-          </ul>
-        )}
+        {sortedData && <CardList data={sortedData} />}
         {data?.count && !search && (
           <Button variant="contained" onClick={() => loadMoreData()}>
             Load more

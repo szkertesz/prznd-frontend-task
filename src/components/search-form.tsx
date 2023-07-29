@@ -11,10 +11,7 @@ const SearchForm = ({ search, setSearch, submitSearch }: ISearchFormProps) => {
     <Box
       component="form"
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
+        display: 'grid',
       }}
       noValidate
       autoComplete="off"
@@ -28,9 +25,13 @@ const SearchForm = ({ search, setSearch, submitSearch }: ISearchFormProps) => {
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           setSearch(event.target.value)
         }}
-        sx={{ mb: 2, width: '50ch' }}
+        sx={{ mb: 2, maxWidth: '50ch' }}
       />
-      <Button variant="contained" onClick={() => submitSearch()}>
+      <Button
+        variant="contained"
+        onClick={() => submitSearch()}
+        sx={{ maxWidth: '10ch' }}
+      >
         Search
       </Button>
     </Box>
